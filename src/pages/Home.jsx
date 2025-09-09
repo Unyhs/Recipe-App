@@ -9,7 +9,7 @@ import { useMessageBox } from '../context/MessageBoxContext';
 function Home() {
   const isFavoritesPage=false;
   const {user,updatePreferences}=useChef();
-  const [isPopupOpen,setIsPopupOpen]=useState(user?.preferences.firstcut || true);
+  const [isPopupOpen,setIsPopupOpen]=useState(user?.preferences.firstcut);
   const {isNotifOpen,message,setIsNotifOpen}=useMessageBox();
 
   return (
