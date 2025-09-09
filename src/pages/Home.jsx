@@ -3,14 +3,14 @@ import Recipegrid from './Recipegrid';
 import Searchbar from './Searchbar';
 import Userpreferences from '../components/Userpreferences';
 import { useChef } from '../context/ChefContext';
-import { useNotification } from '../context/notificationContext';
 import MessageBox from '../components/MessageBox';
+import { useMessageBox } from '../context/MessageBoxContext';
 
 function Home() {
   const isFavoritesPage=false;
   const {user,updatePreferences}=useChef();
   const [isPopupOpen,setIsPopupOpen]=useState(user.preferences.firstcut);
-  const {isNotifOpen,message,setIsNotifOpen}=useNotification();
+  const {isNotifOpen,message,setIsNotifOpen}=useMessageBox();
 
   return (
     <div className='flex flex-col items-center'>

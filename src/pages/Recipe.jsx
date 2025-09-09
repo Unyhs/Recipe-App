@@ -7,7 +7,7 @@ import { TbMeat } from "react-icons/tb";
 import { PiPlantBold } from "react-icons/pi";
 import { FaLocationDot } from "react-icons/fa6";
 import { useChef } from '../context/ChefContext';
-import {useNotification} from "../context/notificationContext"
+import {useMessageBox} from "../context/MessageBoxContext"
 import MessageBox from '../components/MessageBox';
 
 function Recipe() {
@@ -16,7 +16,7 @@ function Recipe() {
 
     const [recipe,setRecipe]=useState(taggedRecipes.find(ele=>ele.idMeal===mealId));
     const {isAddedToFavorites, addToFavorites, removeFromFavorites}=useChef();
-    const {isNotifOpen,setIsNotifOpen, message}=useNotification();
+    const {isNotifOpen,setIsNotifOpen, message}=useMessageBox();
 
     useEffect(()=>{
         setRecipe(taggedRecipes.find(ele=>ele.idMeal===mealId))

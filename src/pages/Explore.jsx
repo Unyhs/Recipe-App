@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Recipegrid from './Recipegrid';
-import {useNotification} from "../context/notificationContext"
 import MessageBox from '../components/MessageBox';
+import { useMessageBox } from '../context/MessageBoxContext';
 
 function Explore() {
   const isFavoritesPage=false;
   const isExplorePage=true;
-  const {isNotifOpen,setIsNotifOpen, message}=useNotification();
+  const {isNotifOpen,setIsNotifOpen, message}=useMessageBox();
   
   return (
     <div>

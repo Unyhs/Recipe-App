@@ -6,19 +6,19 @@ import ThemeContextWrapper from './context/ThemeContext.jsx'
 import ChefContextWrapper from './context/ChefContext.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import RecipesContextWrapper from './context/RecipesContext.jsx'
-import NotificationContextWrapper from './context/notificationContext.jsx'
+import MessageBoxContextWrapper from './context/MessageBoxContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeContextWrapper>
-        <NotificationContextWrapper>
+        <MessageBoxContextWrapper>
           <ChefContextWrapper>
             <RecipesContextWrapper>
               <App />
             </RecipesContextWrapper>
           </ChefContextWrapper>
-          </NotificationContextWrapper>
+          </MessageBoxContextWrapper>
       </ThemeContextWrapper>
     </BrowserRouter>
   </StrictMode>

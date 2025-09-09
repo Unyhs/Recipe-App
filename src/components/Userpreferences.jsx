@@ -3,7 +3,7 @@ import { PiPlantBold } from "react-icons/pi";
 import { RiCake3Fill } from "react-icons/ri";
 import { MdOutlineTimer } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
-import { useNotification } from '../context/notificationContext';
+import { useMessageBox } from '../context/MessageBoxContext';
 
 function Userpreferences({user, updatePreferences, isPopupOpen,setIsPopupOpen}) {
 
@@ -14,7 +14,7 @@ function Userpreferences({user, updatePreferences, isPopupOpen,setIsPopupOpen}) 
     const [sweetTooth,setSweetTooth]=useState(user.preferences.sweetTooth || false)
     
     const [experiment, setExperiment] = useState(false);
-    const {setIsNotifOpen, setMessage}=useNotification();
+    const {setIsNotifOpen, setMessage}=useMessageBox();
 
     useEffect(() => {
        

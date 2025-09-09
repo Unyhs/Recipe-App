@@ -1,10 +1,10 @@
 import { createContext,useContext,useEffect, useState } from "react"
-import { useNotification } from '../context/notificationContext';
+import { useMessageBox } from './MessageBoxContext';
 
 export const ChefContext=createContext();
 
 const ChefContextWrapper=({children})=>{
-    const {setIsNotifOpen, setMessage}=useNotification();
+    const {setIsNotifOpen, setMessage}=useMessageBox();
     const [user, setUser]=useState({    
                 preferences:
                 {
