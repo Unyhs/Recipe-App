@@ -1,11 +1,15 @@
 import { createContext,useContext,useEffect, useState } from "react"
+import { useNotification } from '../context/notificationContext';
 
 export const ChefContext=createContext();
 
 const ChefContextWrapper=({children})=>{
+    const {setIsNotifOpen, setMessage}=useNotification();
     const [user, setUser]=useState({    
-                vegetarian:false,
-                timeConstraint:false,
+                preferences:
+                {
+                    firstcut:true,
+                },
                 favorites:[]
             });
 
@@ -15,6 +19,10 @@ const ChefContextWrapper=({children})=>{
             setUser(JSON.parse(savedUser));
         };
         getSavedUser();
+
+        return ()=>{
+            setUser(null)
+        }
     },[])
 
     useEffect(() => {
@@ -38,6 +46,9 @@ const ChefContextWrapper=({children})=>{
 
             return {...prevUser,favorites: updatedFavorites};
         });
+
+        setIsNotifOpen(true);
+        setMessage(`${recipe.strMeal} has been added to favorites`);
     };
 
     const removeFromFavorites=(recipe)=>{
@@ -52,13 +63,29 @@ const ChefContextWrapper=({children})=>{
         
             return {...prevUser,favorites: updatedFavorites};
         });
+
+        setIsNotifOpen(true);
+        setMessage(`${recipe.strMeal} has been removed from favorites`);
     };
 
     const isAddedToFavorites=(recipeId)=>{
         return user.favorites.includes(recipeId)
     }
 
-    return <ChefContext.Provider value={{user, addToFavorites, removeFromFavorites, isAddedToFavorites}}>{children}</ChefContext.Provider>
+    const updatePreferences=(pref)=>{
+        const newPref=user.preferences;
+
+        newPref.vegetarian=pref.vegetarian;
+        newPref.quickRecipes=pref.quickRecipes;
+        newPref.favorites=pref.favorites;
+        newPref.experimental=pref.experimental;
+        newPref.sweetTooth=pref.sweetTooth
+        newPref.firstcut=false;
+
+        setUser(prev => ({ ...prev, preferences: newPref }))
+    }
+
+    return <ChefContext.Provider value={{user, updatePreferences, addToFavorites, removeFromFavorites, isAddedToFavorites}}>{children}</ChefContext.Provider>
 }
 
 export const useChef=()=>useContext(ChefContext);

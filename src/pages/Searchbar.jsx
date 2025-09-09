@@ -3,6 +3,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import { IoSearchOutline } from "react-icons/io5";
 import Filterbar from '../components/Filterbar';
 import useFilteredRecipes from "./../hooks/useFilteredRecipes"
+import { useNavigate } from 'react-router-dom';
 
 function Searchbar() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +16,7 @@ function Searchbar() {
   const { filteredRecipes } = useFilteredRecipes(recipes, selectedFilters);
 
   const searchbarRef = useRef(null);
+  const navigate=useNavigate();
 
   useEffect(() => {
   const handleClickOutside = (event) => {
@@ -50,8 +52,6 @@ function Searchbar() {
       const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${query}`;
       const result = await axios.get(url);
       const meals = result.data.meals;
-
-      console.log("meals are", meals)
 
       setRecipes(meals || []); 
       setShowSuggestions(true);
@@ -98,7 +98,8 @@ function Searchbar() {
       {showSuggestions && filteredRecipes.length > 0 && (
       <div className="mt-2 p-2 bg-white rounded-lg shadow-md border border-gray-200 z-10 max-h-64 overflow-y-auto">
         {filteredRecipes.map((meal) => (
-          <div key={meal.idMeal} className="flex items-center p-2 cursor-pointer hover:bg-gray-100 transition-colors rounded divide-y-2 border-y-1 border-gray-100 ">
+          <div key={meal.idMeal} onClick={()=>{navigate(`/recipe/${meal.idMeal}`)}}
+          className="flex items-center p-2 cursor-pointer hover:bg-gray-100 transition-colors rounded divide-y-2 border-y-1 border-gray-100 ">
             <img src={meal.strMealThumb} className='w-[40px] h-[40px] mr-2' alt='meal.strMeal'/>
             <p>{meal.strMeal}</p>
           </div>

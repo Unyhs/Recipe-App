@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <div className='bg-red-400 py-4 px-4 w-full flex justify-center'>
+    <div className='bg-green-700 py-4 px-4 w-full flex justify-center text-white'>
       <div className='flex w-11/12'>
         <div className='flex gap-8'>
 

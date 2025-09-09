@@ -14,7 +14,7 @@ function Recipecard({recipe}) {
   const navigate=useNavigate();
 
   return (
-    <div className='h-[350px] w-[200px] py-4 px-2 bg-card rounded-3xl overflow-hidden shadow-lg transition-transform flex flex-col justify-between hover:scale-105 hover:cursor-pointer'>
+    <div className='h-[300px] w-[200px] py-4 px-2 bg-card rounded-3xl overflow-hidden shadow-lg transition-transform flex flex-col justify-between hover:scale-105 hover:cursor-pointer'>
       <div onClick={()=>{navigate(`/recipe/${recipe.idMeal}`)}}>
         <div className='w-full h-[150px] overflow-hidden rounded-2xl'>
         <img 
@@ -28,11 +28,11 @@ function Recipecard({recipe}) {
 
         <p className='text-text font-bold text-lg truncate'>{recipe.strMeal}</p>
 
-        <div className='flex items-center justify-around text-secondaryText text-sm mt-2'>
+        <div className='flex items-center justify-around text-sm mt-2'>
 
           {/* Time block: icon and prep time */}
           <div className='flex items-center space-x-1'>
-              <MdOutlineTimer className='text-secTextLight' />
+              <MdOutlineTimer className='text-pink-500' />
               <span>{formatTime(recipe.tags.prepTime)} </span>
           </div>
 
@@ -57,12 +57,12 @@ function Recipecard({recipe}) {
       <div>
         {recipe?.tags?.isFavorite ? 
             <div onClick={()=>{removeFromFavorites(recipe)}}
-            className='flex justify-center items-center space-x-2 px-2 py-1 rounded-full cursor-pointer transition-colors text-lg  bg-red-500 text-white shadow-md'>
+            className='flex justify-center items-center space-x-2 px-2 py-1 rounded-full cursor-pointer transition-colors text-lg  bg-red-400 text-white shadow-md'>
             <FaHeart size={20} color='white' />
             <span>Hot Favorite</span>
             </div>:
             <div onClick={()=>{addToFavorites(recipe)}}
-            className='flex justify-center items-center space-x-2 px-2 py-1 rounded-full cursor-pointer transition-colors text-lg  bg-red-500 text-white shadow-md'>
+            className='flex justify-center items-center space-x-2 px-2 py-1 rounded-full cursor-pointer transition-colors text-lg  bg-red-400 text-white shadow-md'>
             <span>Add to Favorites</span>
             </div>
             }
