@@ -1,0 +1,42 @@
+name: Deploy to AppRunner
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+        
+        - name: Deploy to AppRunner
+          id: deploy-apprunner
+          uses: awslabs/amazon-app-runner-deploy@main
+          with:
+            service: app-runner-git-deploy-service
+            source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
+            repo: https://github.com/${{ github.repository }}
+            branch: ${{ github.ref }}
+            runtime: NODEJS_12
+            pre-build-command: npm install
+            build-command: npm run build
+            start-command: npm run start
+            port: 8080
+            region: ${{ secrets.AWS_REGION }}
+            cpu : 1
+            memory : 2
+            wait-for-service-stability: true
+      
+        - name: App Runner output
+          run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
