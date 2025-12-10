@@ -20,22 +20,37 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: ${{ secrets.AWS_REGION }}
         
-        - name: Deploy to AppRunner
+        - name: Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
+        
+        - name: Build and push image to ECR
+          id: build-image
+          run: |
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            FULL_URI="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY}}:${SHORT_SHA}"
+            echo "URI: $FULL_URI"
+            
+            docker build -t $FULL_URI .
+            docker push $FULL_URI
+            echo "image=$FULL_URI" >> $GITHUB_OUTPUT
+            echo "Image pushed to ECR: $FULL_URI"
+
+        - name: Deploy to App Runner
           id: deploy-apprunner
-          uses: awslabs/amazon-app-runner-deploy@main
+          uses: awslabs/amazon-app-runner-deploy@main        
           with:
-            service: my-recipe-app-service
-            source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
-            repo: https://github.com/${{ github.repository }}
-            branch: ${{ github.ref }}
-            runtime: NODEJS_20
-            build-command: npm install && npm run build
-            start-command: npm run start
-            port: 8080
-            region: ${{ secrets.AWS_REGION }}
-            cpu : 1
-            memory : 2
-            wait-for-service-stability: true
+           service: my-recipe-app-service
+           image: ${{ steps.build-image.outputs.image }} 
+           access-role-arn: ${{ secrets.ROLE_ARN }}
+           region: ${{ secrets.AWS_REGION }}
+           port: 80 
+           cpu : 1
+           memory : 2
+           wait-for-service-stability: true
       
         - name: App Runner output
-          run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
+          run: |
+            echo "App Runner service ID: ${{ steps.deploy-apprunner.outputs.service-id }}"
+
+
