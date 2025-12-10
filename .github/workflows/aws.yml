@@ -52,5 +52,6 @@ jobs:
         - name: App Runner output
           run: |
             echo "App Runner service ID: ${{ steps.deploy-apprunner.outputs.service-id }}"
+            echo "App Runner service ID: ${{ steps.deploy-apprunner.outputs.service-url }}"
 
 
