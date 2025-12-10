@@ -75,7 +75,7 @@ function Recipe() {
             </div>}
         </div>
         <div className='w-3/4 flex justify-center'>
-                <img src={recipe.strMealThumb} alt={recipe.strMeal} className='w-[400px]' />
+                <img src={recipe?.strMealThumb} alt={recipe?.strMeal} className='w-[400px]' />
         </div>
         <div className='w-10/12'>
             <h2 className='text-2xl font-bold mt-4 mb-2'>Ingredients</h2>
@@ -90,7 +90,7 @@ function Recipe() {
         </div>
         <div className='w-11/12'>
             <p className='px-8 py-4 text-justify'>
-                {recipe.strInstructions}
+                {recipe?.strInstructions}
             </p>
         </div>
         
