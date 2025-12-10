@@ -18,7 +18,7 @@ function Home() {
       <h1 className='text-xl lg:text-3xl'>Recommended for You</h1>
       {!isFavoritesPage && 
         <div>
-        {!user.preferences.firstcut && 
+        { user && user.preferences && !user.preferences.firstcut && 
         <div className='flex gap-2'>
 
           <p>Your Preferences: </p>
