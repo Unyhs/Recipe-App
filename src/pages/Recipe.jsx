@@ -47,7 +47,7 @@ function Recipe() {
                 <span>{formatTime(recipe?.tags?.prepTime)} </span>
             </div>
             <div className='flex items-center space-x-1'>
-                {recipe.tags.isVegetarian ? (
+                {recipe?.tags?.isVegetarian ? (
                     <>
                     <PiPlantBold className='text-green-500' size={20} />
                     <span>Veg</span>

@@ -73,7 +73,7 @@ const ChefContextWrapper=({children})=>{
     }
 
     const updatePreferences=(pref)=>{
-        const newPref=user.preferences;
+        const newPref=user?.preferences || {};
 
         newPref.vegetarian=pref.vegetarian;
         newPref.quickRecipes=pref.quickRecipes;
