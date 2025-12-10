@@ -80,7 +80,7 @@ function Recipe() {
         <div className='w-10/12'>
             <h2 className='text-2xl font-bold mt-4 mb-2'>Ingredients</h2>
             <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-                {getIngredients().map((item, index) => (
+                {recipe && getIngredients().map((item, index) => (
                     <div key={index} className='bg-green-100 p-2 rounded-lg shadow-md'>
                         <span className='font-semibold'>{item.measure} </span>
                         <span>{item.ingredient}</span>
